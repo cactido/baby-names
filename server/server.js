@@ -3,8 +3,10 @@ const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./schema/resolvers');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 require('dotenv').config();
 
 // database connection
