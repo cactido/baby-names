@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main-card {
+  background: repeating-linear-gradient(
+    45deg,
+    lightpink,
+    lightpink 20px,
+    lightblue 20px,
+    lightblue 40px
+  );
+}
