@@ -30,20 +30,114 @@ const Result = () => {
                 }
             }
         `;
-    const { data: user1Data, error: user1Error } = useQuery(GET_USER, { variables: { userId: '6150c05b7afa685d78a9d919' } });
-    const { data: user2Data, error: user2Error } = useQuery(GET_USER, { variables: { userId: '6153b9c8d58bd6ec1fe2340b' } });
-     
-    if (user1Error && console.log(user1Error));
-    if (user2Error && console.log(user2Error));
+    // const { data: user1Data } = useQuery(GET_USER, { variables: { userId: '6150c05b7afa685d78a9d919' } } );
+    // const { data: user2Data } = useQuery(GET_USER, { variables: { userId: '6153b9c8d58bd6ec1fe2340b' } } );
+    // const user1Names = user1Data && user1Data.getUser.provided_names;
     
-    let user1Names = [];
-    let user2Names = [];
+    const user1Names = [
+        {
+            name: 'Sara',
+            rating: 5
+        },
+        {
+            name: 'Sasha',
+            rating: 1
+        },
+        {
+            name: 'Louise',
+            rating: 2
+        },
+        {
+            name: 'Tina',
+            rating: 4
+        },
+        {
+            name: 'Linda',
+            rating: 4
+        },
+        {
+            name: 'Janice',
+            rating: 1
+        },
+        {
+            name: 'Willow',
+            rating: 1
+        },
+        {
+            name: 'Marge',
+            rating: 1
+        },
+        {
+            name: 'Rebecca',
+            rating: 3
+        },
+        {
+            name: 'Nancy',
+            rating: 5
+        }
+    ];
 
-    if (user1Data) user1Names = user1Data.getUser.provided_names;
-    if (user2Data) user2Names = user2Data.getUser.provided_names;
+    const user2Names = [
+        {
+            name: 'Sara',
+            rating: 2
+        },
+        {
+            name: 'Sasha',
+            rating: 4
+        },
+        {
+            name: 'Louise',
+            rating: 2
+        },
+        {
+            name: 'Tina',
+            rating: 1
+        },
+        {
+            name: 'Linda',
+            rating: 4
+        },
+        {
+            name: 'Alina',
+            rating: 1
+        },
+        {
+            name: 'Willow',
+            rating: 3
+        },
+        {
+            name: 'Bethany',
+            rating: 1
+        },
+        {
+            name: 'Rebecca',
+            rating: 3
+        },
+        {
+            name: 'Elizabeth',
+            rating: 5
+        }
+    ];
 
-    console.log('user1Names: ',user1Names);
-    console.log('user2Names: ',user2Names);
+    let results = [];
+    let user2NamesOnly = [];
+    let avg;
+
+    user2Names.forEach(name => {
+        user2NamesOnly.push(name.name)
+    })
+
+    user1Names.forEach(nameObject => {
+        if (user2NamesOnly.includes(nameObject.name)) {
+            avg = (nameObject.rating + user2Names[user2NamesOnly.indexOf(nameObject.name)].rating) / 2;
+            results.push({ name: nameObject.name, rating: avg });
+        }
+    });
+
+    results.sort((a, b) => { return b.rating - a.rating });
+
+    console.log(results);
 
     return (
         <div>
