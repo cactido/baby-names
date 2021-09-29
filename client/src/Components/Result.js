@@ -1,135 +1,27 @@
 import React from 'react';
-import { gql, useQuery } from '@apollo/client';
 
-// pass both users' data through props and render based on the loading state
-
-const Result = (props) => {
-    /*
-    const GET_ALL_USERS = gql`
-        query getAllUsers {
-            getAllUsers {
-                id
-                display_name
-                provided_names {
-                    name
-                    rating
-                    user_id
-                }
-            }
-        }
-    `;
-    
-
-    const GET_USER = gql`
-                query getUser($userId: ID!) {
-                    getUser(id: $userId) {
-                    provided_names {
-                        name
-                    }
-                    selected_names {
-                        name
-                    }
-                }
-            }
-        `;
-        */
-    // const { data: user1Data } = useQuery(GET_USER, { variables: { userId: '6150c05b7afa685d78a9d919' } } );
-    // const { data: user2Data } = useQuery(GET_USER, { variables: { userId: '6153b9c8d58bd6ec1fe2340b' } } );
-    // const user1Names = user1Data && user1Data.getUser.provided_names;
-
-    const user1Names = [
-        {
-            name: 'Sara',
-            rating: 5
-        },
-        {
-            name: 'Sasha',
-            rating: 1
-        },
-        {
-            name: 'Louise',
-            rating: 2
-        },
-        {
-            name: 'Tina',
-            rating: 4
-        },
-        {
-            name: 'Linda',
-            rating: 4
-        },
-        {
-            name: 'Janice',
-            rating: 1
-        },
-        {
-            name: 'Willow',
-            rating: 1
-        },
-        {
-            name: 'Marge',
-            rating: 1
-        },
-        {
-            name: 'Rebecca',
-            rating: 3
-        },
-        {
-            name: 'Nancy',
-            rating: 5
-        }
-    ];
-
-    const user2Names = [
-        {
-            name: 'Sara',
-            rating: 2
-        },
-        {
-            name: 'Sasha',
-            rating: 4
-        },
-        {
-            name: 'Louise',
-            rating: 2
-        },
-        {
-            name: 'Tina',
-            rating: 1
-        },
-        {
-            name: 'Linda',
-            rating: 4
-        },
-        {
-            name: 'Alina',
-            rating: 1
-        },
-        {
-            name: 'Willow',
-            rating: 3
-        },
-        {
-            name: 'Bethany',
-            rating: 1
-        },
-        {
-            name: 'Rebecca',
-            rating: 3
-        },
-        {
-            name: 'Elizabeth',
-            rating: 5
-        }
-    ];
-
-    const matchList =()=> {
+const Result = ({ user1Data, user2Data }) => {
+    const user1 = user1Data && user1Data.getUser.provided_names && user1Data.getUser;
+    const user2 = user2Data && user2Data.getUser.selected_names && user2Data.getUser;
+    console.log('user1:', user1);
+    if (!user1 || !user2) { return (<div>Loading...</div>) };
+           
+    const matchList = () => {
         let results = [];
+        let user1Names = [];
+        let user2Names = [];
         let user2NamesOnly = [];
         let avg;
 
-        user2Names.forEach(name => { user2NamesOnly.push(name.name) })
+        console.log(user1.provided_names);
+        
+        user1.provided_names.forEach(name => { user1Names.push(name) });
+        user1.selected_names.forEach(name => { user1Names.push(name) });
+        user2.provided_names.forEach(name => { user2Names.push(name) });
+        user2.selected_names.forEach(name => { user2Names.push(name) });
 
+        user2Names.forEach(name => { user2NamesOnly.push(name.name) })
+        
         user1Names.forEach(nameObject => {
             if (user2NamesOnly.includes(nameObject.name)) {
                 avg = (nameObject.rating + user2Names[user2NamesOnly.indexOf(nameObject.name)].rating) / 2;
@@ -145,10 +37,10 @@ const Result = (props) => {
         console.log(resultList);
         return resultList;
     }
-
+    
     return (
         <div>
-            <ul>{ matchList() }</ul>
+            { matchList() }
         </div>
     )
 }
