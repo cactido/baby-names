@@ -4,7 +4,7 @@ import { Card, CardBody, CardTitle, CardHeader, CardText, Button, Form, FormGrou
 
 const Entry = (props) => {
     // names will eventually be an array possibly
-    const [formState, setFormState] = useState({ gender: '', names: '', rating: '3' });
+    const [formState, setFormState] = useState({ gender: '', names: '', rating: '3 Enjoy' });
 
     // temp state variable for creating the namelist html
     const [nameListState, setNameListState] = useState([]);
@@ -24,15 +24,15 @@ const Entry = (props) => {
 
     const renderRating = (param) => {
         switch (param) {
-            case '1':
+            case '1 Like':
                 return 'Like';
-            case '2':
+            case '2 Fancy':
                 return 'Fancy';
-            case '3':
+            case '3 Enjoy':
                 return 'Enjoy';
-            case '4':
+            case '4 Love':
                 return 'Love';
-            case '5':
+            case '5 Adore':
                 return 'Adore';
         }
     }
@@ -66,17 +66,28 @@ const Entry = (props) => {
                                     </FormGroup>
                                 </Col>
                             </FormGroup>
-                            <FormGroup>
+                            {/* <FormGroup>
                                 <Label for="rating">Rating</Label>
                                 <Input xs="8" type="range" name="rating" id="rating" min="1" max="5" step="1" value={formState.rating} onChange={handleChange} />
                                 <Row className="d-flex justify-content-between">
-                                    <span>Like</span>
-                                    <span>Fancy</span>
-                                    <span>Enjoy</span>
-                                    <span>Love</span>
-                                    <span>Adore</span>
+
                                 </Row>
+                            </FormGroup> */}
+                            <FormGroup>
+                                <Label for="rating">Rating</Label>
+                                <Input type="select" name="rating" id="rating" value={formState.rating} onChange={handleChange}>
+                                    <option>1 Like</option>
+                                    <option>2 Fancy</option>
+                                    <option>3 Enjoy</option>
+                                    <option>4 Love</option>
+                                    <option>5 Adore</option>
+                                </Input>
                             </FormGroup>
+                            {/* <span>Like</span>
+                            <span>Fancy</span>
+                            <span>Enjoy</span>
+                            <span>Love</span>
+                            <span>Adore</span> */}
                             <FormGroup className="mb-2">
                                 <Label for="name">Name</Label>
                                 <Input placeholder='Your baby name here' name='names' type='text' id='names' value={formState.names} onChange={handleChange} />

@@ -2,7 +2,7 @@ import Login from './pages/Login';
 import Entry from './pages/Entry';
 import Header from './components/Header';
 import Compare from './pages/Compare';
-import { Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Row } from 'reactstrap';
 
 function App() {
   return (

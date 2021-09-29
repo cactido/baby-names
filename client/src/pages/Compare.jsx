@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
@@ -13,10 +13,6 @@ const Compare = () => {
                 </FormGroup>
             </Row>
             <Button>Rate Names</Button>
-            <FormGroup>
-                <Label for="exampleRange">Range</Label>
-                <Input type="range" name="range" id="exampleRange" />
-            </FormGroup>
         </Form>
 
 
