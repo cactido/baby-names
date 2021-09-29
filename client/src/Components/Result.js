@@ -1,7 +1,9 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
 
-const Result = () => {
+// pass both users' data through props and render based on the loading state
+
+const Result = (props) => {
     /*
     const GET_ALL_USERS = gql`
         query getAllUsers {
@@ -16,7 +18,7 @@ const Result = () => {
             }
         }
     `;
-    */
+    
 
     const GET_USER = gql`
                 query getUser($userId: ID!) {
@@ -30,10 +32,11 @@ const Result = () => {
                 }
             }
         `;
+        */
     // const { data: user1Data } = useQuery(GET_USER, { variables: { userId: '6150c05b7afa685d78a9d919' } } );
     // const { data: user2Data } = useQuery(GET_USER, { variables: { userId: '6153b9c8d58bd6ec1fe2340b' } } );
     // const user1Names = user1Data && user1Data.getUser.provided_names;
-    
+
     const user1Names = [
         {
             name: 'Sara',
@@ -120,32 +123,32 @@ const Result = () => {
         }
     ];
 
-    let results = [];
-    let user2NamesOnly = [];
-    let avg;
+    const matchList =()=> {
+        let results = [];
+        let user2NamesOnly = [];
+        let avg;
 
-    user2Names.forEach(name => {
-        user2NamesOnly.push(name.name)
-    })
+        user2Names.forEach(name => { user2NamesOnly.push(name.name) })
 
-    user1Names.forEach(nameObject => {
-        if (user2NamesOnly.includes(nameObject.name)) {
-            avg = (nameObject.rating + user2Names[user2NamesOnly.indexOf(nameObject.name)].rating) / 2;
-            results.push({ name: nameObject.name, rating: avg });
-        }
-    });
+        user1Names.forEach(nameObject => {
+            if (user2NamesOnly.includes(nameObject.name)) {
+                avg = (nameObject.rating + user2Names[user2NamesOnly.indexOf(nameObject.name)].rating) / 2;
+                results.push({ name: nameObject.name, rating: avg });
+            }
+        });
 
-    results.sort((a, b) => { return b.rating - a.rating });
-    const resultList = results.map((result) => {
-        return <li key={result.name}>{result.name} ({result.rating})</li>
-    })
+        results.sort((a, b) => { return b.rating - a.rating });
+        const resultList = results.map((result) => {
+            return <li key={result.name}>{result.name} ({result.rating})</li>
+        })
 
-    console.log(results);
-    console.log(resultList);
+        console.log(resultList);
+        return resultList;
+    }
 
     return (
         <div>
-            <ul>{resultList}</ul>
+            <ul>{ matchList() }</ul>
         </div>
     )
 }
