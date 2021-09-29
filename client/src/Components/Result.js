@@ -136,12 +136,16 @@ const Result = () => {
     });
 
     results.sort((a, b) => { return b.rating - a.rating });
+    const resultList = results.map((result) => {
+        return <li key={result.name}>{result.name} ({result.rating})</li>
+    })
 
     console.log(results);
+    console.log(resultList);
 
     return (
         <div>
-
+            <ul>{resultList}</ul>
         </div>
     )
 }
