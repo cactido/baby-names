@@ -21,3 +21,21 @@ code {
     lightblue 40px
   );
 }
+
+.header {
+  background-color: darkblue;
+  color: lightpink;
+}
+
+.links {
+  text-decoration: none;
+  color: lightpink;
+}
+
+.girl-name {
+  background-color: lightpink;
+}
+
+.boy-name {
+  background-color: lightblue;
+}

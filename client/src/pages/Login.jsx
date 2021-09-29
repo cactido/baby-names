@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button, Form, FormGroup, Label, Input, FormText, Row, Col } from 'reactstrap';
+import { Card, CardTitle, Button, Form, FormGroup, Label, Input, Row, Col, Badge } from 'reactstrap';
 
 
 const Login = (props) => {
 
-    const [loginFormState, setLoginFormState] = useState({ email: '', password: '' });
-    const [signUpFormState, setSignUpFormState] = useState({ email: '', username: '', password: '' });
+    const [loginFormState, setLoginFormState] = useState({ email: '', password: '', active: true });
+    const [signUpFormState, setSignUpFormState] = useState({ email: '', username: '', password: '', active: false });
 
     const handleLoginChange = (event) => {
         const { name, value } = event.target
@@ -26,7 +26,6 @@ const Login = (props) => {
 
     const handleLoginFormSubmit = async event => {
         event.preventDefault();
-
         console.log("submitted login form", loginFormState);
     }
 
@@ -35,10 +34,38 @@ const Login = (props) => {
         console.log("submitted Sign Up form", signUpFormState);
     }
 
+    const handleSwitch = (event) => {
+        const { name } = event.target;
+
+        if ( name === "toSignUp") {
+            setLoginFormState({
+                ...loginFormState,
+                active: false
+            });
+
+            setSignUpFormState({
+                ...signUpFormState,
+                active: true
+            })
+        } else if ( name === 'toLogin') {
+            setLoginFormState({
+                ...loginFormState,
+                active: true
+            });
+
+            setSignUpFormState({
+                ...signUpFormState,
+                active: false
+            })
+        }
+
+    }
+
     return (
         <Row>
-            <Col sm="6">
-                <Card body className="main-card">
+            <Col xs="12" sm="12" className="m-0 p-0">
+                { loginFormState.active && (
+                    <Card body className="main-card">
                     <CardTitle tag="h5">Login</CardTitle>
                     <Form onSubmit={handleLoginFormSubmit}>
                         <FormGroup>
@@ -50,11 +77,14 @@ const Login = (props) => {
                             <Input placeholder='**************' name='password' type='password' id='loginPassword' value={loginFormState.password} onChange={handleLoginChange} />
                         </FormGroup>
                         <Button>Submit</Button>
+                        <Row>
+                            <h5>Not a member?: <Button name='toSignUp' color="primary" onClick={handleSwitch}>Sign Up</Button></h5>
+                        </Row>
                     </Form>
                 </Card>
-            </Col>
-            <Col sm="6">
-                <Card body className="main-card">
+                )}
+                { signUpFormState.active && (
+                    <Card body className="main-card">
                     <CardTitle tag="h5">Sign Up</CardTitle>
                     <Form onSubmit={handleSignUpFormSubmit}>
                         <FormGroup>
@@ -70,8 +100,12 @@ const Login = (props) => {
                             <Input placeholder='**************' name='password' type='password' id='SignUpPassword' value={signUpFormState.password} onChange={handleSignUpChange} />
                         </FormGroup>
                         <Button>Submit</Button>
+                        <Row>
+                            <h5>Already a member?: <Button name='toLogin' color="primary" onClick={handleSwitch}>Login</Button></h5>
+                        </Row>
                     </Form>
                 </Card>
+                )}
             </Col>
         </Row>
     )
