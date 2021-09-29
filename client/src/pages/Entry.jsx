@@ -23,7 +23,7 @@ const Entry = (props) => {
     }
 
     const renderRating = (param) => {
-        switch(param) {
+        switch (param) {
             case '1':
                 return 'Like';
             case '2':
@@ -44,14 +44,14 @@ const Entry = (props) => {
 
     return (
         <Row>
-            <Col sm="12" md="6">
+            <Col sm="12" md="6" className="m-0 p-0">
                 <Card>
+                    <CardHeader className="main-card">Name Entry</CardHeader>
                     <CardBody>
-                        <CardTitle tag="h5">Name Entry</CardTitle>
                         <Form onSubmit={handleFormSubmit}>
                             <FormGroup tag="fieldset" row>
                                 <legend className="col-form-label col-sm-2 col-md-4">Gender</legend>
-                                <Col sm={10}>
+                                <Col xs="12" className="m-0 p-0">
                                     <FormGroup check>
                                         <Label check>
                                             <Input type="radio" name="gender" value="Boy" onChange={handleChange} />{' '}
@@ -86,28 +86,28 @@ const Entry = (props) => {
                     </CardBody>
                 </Card>
             </Col>
-            <Col md="6" sm="12">
-                    <Card>
-                        <CardHeader className="main-card">Names</CardHeader>
-                        <CardBody>
-                            {nameListState.map(item => (
-                                <Row key={item.names} className={`d-flex justify-content-evenly border border-dark p-2 m-1 ${item.gender === 'Girl' ? 'girl-name' : 'boy-name'}`}>
-                                    <Col>
-                                        {item.names}
-                                    </Col>
-                                    <Col>
-                                        {item.gender}
-                                    </Col>
-                                    <Col>
-                                        {renderRating(item.rating)}
-                                    </Col>
-                                    <Col>
-                                        <span name={item.names} onClick={handleRemove}>X</span>
-                                    </Col>
-                                </Row>
-                            ))}
-                        </CardBody>
-                    </Card>
+            <Col md="6" sm="12" className="m-0 p-0">
+                <Card>
+                    <CardHeader className="main-card">Names</CardHeader>
+                    <CardBody>
+                        {nameListState.map(item => (
+                            <Row key={item.names} className={`d-flex justify-content-evenly border border-dark p-2 m-1 ${item.gender === 'Girl' ? 'girl-name' : 'boy-name'}`}>
+                                <Col>
+                                    {item.names}
+                                </Col>
+                                <Col>
+                                    {item.gender}
+                                </Col>
+                                <Col>
+                                    {renderRating(item.rating)}
+                                </Col>
+                                <Col>
+                                    <span name={item.names} onClick={handleRemove}>X</span>
+                                </Col>
+                            </Row>
+                        ))}
+                    </CardBody>
+                </Card>
             </Col>
         </Row>
     )

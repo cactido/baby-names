@@ -1,14 +1,16 @@
 import Login from './pages/Login';
 import Entry from './pages/Entry';
 import Header from './components/Header';
-import { Container, Row } from 'reactstrap';
+import Compare from './pages/Compare';
+import { Container, Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 function App() {
   return (
     <Container fluid>
       <Header></Header>
-        <Login></Login>
+        {/* <Login></Login> */}
         <Entry></Entry>
+        {/* <Compare></Compare> */}
       <Row>
         {/* Footer goes here */}
       </Row>
