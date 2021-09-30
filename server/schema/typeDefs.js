@@ -32,7 +32,6 @@ const typeDefs = gql`
         getProvidedNames(id: ID!): [ProvidedName]
         getSelectedNames(id: ID!): [SelectedName]
         getTotalResponses(id: ID!): Int
-        getAuth(email: String!, password: String!): Auth
     }
     # mutations
     type Mutation {
@@ -46,6 +45,7 @@ const typeDefs = gql`
         updateDisplayName(id: ID!, display_name: String!): User
         addProvidedName(name: String!, rating: Int!, user_id: ID!): User
         addSelectedName(name: String!, rating: Int!, user_id: ID!): User
+        getAuth(email: String!, password: String!): Auth
     }
 `;
 

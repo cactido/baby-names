@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useMutation, useLazyQuery } from '@apollo/client';
+import { CREATE_USER, GET_AUTH } from '../queries';
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay, Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
 const Login = (props) => {
-
     const [loginFormState, setLoginFormState] = useState({ email: '', password: '', active: true });
-    const [signUpFormState, setSignUpFormState] = useState({ email: '', username: '', password: '', active: false });
+    const [signUpFormState, setSignUpFormState] = useState({ email: '', displayName: '', password: '', active: false });
+    const [createUser, createUserState] = useMutation(CREATE_USER);
+    const [userAuth, userAuthState] = useMutation(GET_AUTH);
 
     const handleLoginChange = (event) => {
         const { name, value } = event.target
@@ -25,12 +28,22 @@ const Login = (props) => {
 
     const handleLoginFormSubmit = async event => {
         event.preventDefault();
-        console.log("submitted login form", loginFormState);
-    }
-
+        userAuth({variables:
+            {
+                email: loginFormState.email,
+                password: loginFormState.password
+            }
+        });
+    };
     const handleSignUpFormSubmit = async event => {
         event.preventDefault();
-        console.log("submitted Sign Up form", signUpFormState);
+        createUser({variables:
+            {
+                email: signUpFormState.email,
+                password: signUpFormState.password,
+                displayName: signUpFormState.displayName
+            }
+        });
     }
 
     const handleSwitch = (event) => {
@@ -57,14 +70,13 @@ const Login = (props) => {
                 active: false
             })
         }
-
     }
 
     return (
         <Row>
             <Col xs="12" sm="6" className="m-0 p-0" style={{ height: "300px" }}>
                 <Card>
-                    <CardImg width="100%" style={{ height: "300px" }} src={require('../assets/Carousel/Baby.jpg').default} alt="Card image cap"/>
+                    <CardImg width="100%" style={{ height: "300px" }} src={require('../assets/Carousel/Baby.jpg').default} alt="Card image cap" />
                     <CardImgOverlay className="d-flex justify-content-end flex-column">
                         <CardTitle tag="h5">Welcome to Tot Titles Together</CardTitle>
                         <CardText>Our goal is to help expecting partners to discuss names for their children without fear of their favorite names getting shot down.</CardText>
@@ -100,8 +112,8 @@ const Login = (props) => {
                                 <Input type="email" name="email" id="SignUpEmail" value={signUpFormState.email} placeholder="Your Email" onChange={handleSignUpChange} />
                             </FormGroup>
                             <FormGroup>
-                                <Label for="username">Username</Label>
-                                <Input placeholder='Username' name='username' type='username' id='username' value={signUpFormState.username} onChange={handleSignUpChange} />
+                                <Label for="SignUpEmail">Display Name</Label>
+                                <Input type="text" name="displayName" id="SignUpDisplayName" value={signUpFormState.displayName} placeholder="Your Display Name" onChange={handleSignUpChange} />
                             </FormGroup>
                             <FormGroup className="mb-2">
                                 <Label for="SignUpPassword">Password</Label>
@@ -117,7 +129,6 @@ const Login = (props) => {
             </Col>
         </Row>
     )
-
 }
 
 export default Login;

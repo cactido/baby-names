@@ -29,14 +29,7 @@ const resolvers = {
         getTotalResponses: async (_, { id }) => {
             const current = await User.findById(id);
             return current.selected_names.length;
-        },
-        getAuth: async (_, { email, password }) => {
-            const current = await User.findOne({ email: email }).exec();
-            const validPassword = bcrypt.compare(password, current.password)
-            if (!current || !validPassword) { throw new AuthenticationError('Invalid login credentials.') };
-            const token = signToken(current);
-            return { token, current };
-        }
+        }        
     },
     Mutation: {
         createUser: async (_, args) => {
@@ -66,6 +59,13 @@ const resolvers = {
         addSelectedName: async (_, { name, rating, user_id }) => {
             const newName = { name, rating };
             return await User.findByIdAndUpdate(user_id, { $push: { selected_names: newName } }, { new: true })
+        },
+        getAuth: async (_, { email, password }) => {
+            const current = await User.findOne({ email: email }).exec();
+            const validPassword = bcrypt.compare(password, current.password)
+            if (!current || !validPassword) { throw new AuthenticationError('Invalid login credentials.') };
+            const token = signToken(current);
+            return { token, current };
         }
     }
 }
