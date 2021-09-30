@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import Auth from "../utils/auth";
-import { ADD_PROVIDED_NAME, GET_ME } from "../utils/queries";
+import { ADD_PROVIDED_NAME, GET_ME, REMOVE_PROVIDED_NAME } from "../utils/queries";
 import { Card, CardBody, CardImg, CardImgOverlay, CardTitle, CardHeader, CardText, Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
 
@@ -10,7 +10,7 @@ const Entry = (props) => {
     const [formState, setFormState] = useState({ gender: '', names: '', rating: '3 Enjoy' });
 
     // temp state variable for creating the namelist html
-    const [nameListState, setNameListState] = useState([]);
+    // const [nameListState, setNameListState] = useState([]);
 
     const {loading, data} = useQuery(GET_ME);
 
@@ -18,7 +18,9 @@ const Entry = (props) => {
 
     const [addProvidedName, addProvidedNameState] = useMutation(ADD_PROVIDED_NAME);
 
-    console.log(userData);
+    const [removeProvidedName, removeProvidedNameState] =  useMutation(REMOVE_PROVIDED_NAME);
+
+    // console.log(userData);
 
     const handleChange = (event) => {
         const { name, value } = event.target
@@ -30,14 +32,14 @@ const Entry = (props) => {
         console.log(formState.gender);
     }
     const handleFormSubmit = async event => {
-        event.preventDefault();
+        // event.preventDefault();
         // setNameListState(namearr => [...namearr, formState]);
 
         const rated = parseInt(formState.rating.split(" ")[0]);
 
-        console.log("ID:",userData._id);
-        console.log("rated:",rated);
-        console.log("name:", formState.names)
+        // console.log("ID:",userData._id);
+        // console.log("rated:",rated);
+        // console.log("name:", formState.names)
 
         try {
             console.log(formState.gender.toLowerCase());
@@ -53,22 +55,34 @@ const Entry = (props) => {
 
     const renderRating = (param) => {
         switch (param) {
-            case '1 Like':
+            case 1:
                 return 'Like';
-            case '2 Fancy':
+            case 2:
                 return 'Fancy';
-            case '3 Enjoy':
+            case 3:
                 return 'Enjoy';
-            case '4 Love':
+            case 4:
                 return 'Love';
-            case '5 Adore':
+            case 5:
                 return 'Adore';
         }
     }
 
     const handleRemove = (event) => {
         const matchItem = event.target.getAttribute("name");
-        setNameListState(nameListState.filter(item => item.names !== matchItem));
+        // setNameListState(nameListState.filter(item => item.names !== matchItem));
+        // console.log(matchItem);
+        try {
+            const { data } = removeProvidedName({ variables: {name: matchItem}});
+                window.location.reload();
+        } catch (err) {
+            console.error(err)
+        }
+
+    }
+
+    if(loading) {
+        return <h2>LOADING...</h2>;
     }
 
     return (
@@ -121,10 +135,10 @@ const Entry = (props) => {
                             <Card>
                                 <CardHeader className="main-card">Names</CardHeader>
                                 <CardBody>
-                                    {nameListState.map(item => (
-                                        <Row key={item.names} className={`d-flex justify-content-evenly border border-dark p-2 m-1 ${item.gender === 'Girl' ? 'girl-name' : 'boy-name'}`}>
+                                    {userData.provided_names.map(item => (
+                                        <Row key={item.name} className={`d-flex justify-content-evenly border border-dark p-2 m-1 ${item.gender === 'girl' ? 'girl-name' : 'boy-name'}`}>
                                             <Col>
-                                                {item.names}
+                                                {item.name}
                                             </Col>
                                             <Col>
                                                 {item.gender}
@@ -133,7 +147,7 @@ const Entry = (props) => {
                                                 {renderRating(item.rating)}
                                             </Col>
                                             <Col>
-                                                <span name={item.names} onClick={handleRemove}>X</span>
+                                                <span style={{cursor: 'pointer'}} name={item.name} onClick={handleRemove}>X</span>
                                             </Col>
                                         </Row>
                                     ))}

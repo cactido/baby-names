@@ -53,6 +53,8 @@ const typeDefs = gql`
         addSelectedName(name: String!, rating: Int!, gender: String!, user_id: ID!): User
         
         getAuth(email: String!, password: String!): Auth
+
+        removeProvidedName(name: String!): User
     }
 `;
 

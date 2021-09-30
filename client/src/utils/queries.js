@@ -8,6 +8,7 @@ const GET_ME = gql`
             provided_names {
                 name
                 rating
+                gender
             }
         }
     }
@@ -71,4 +72,16 @@ const ADD_PROVIDED_NAME = gql`
 }
 `
 
-export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH, GET_ME, ADD_PROVIDED_NAME };
+const REMOVE_PROVIDED_NAME = gql`
+    mutation removeProvidedName($name: String!) {
+        removeProvidedName(name: $name) {
+            provided_names {
+                name
+                rating
+                gender
+            }
+        }
+    }
+`;
+
+export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH, GET_ME, ADD_PROVIDED_NAME, REMOVE_PROVIDED_NAME };

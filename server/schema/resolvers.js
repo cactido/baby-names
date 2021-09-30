@@ -66,6 +66,13 @@ const resolvers = {
             if (!current || !validPassword) { throw new AuthenticationError('Invalid login credentials.'); };
             const token = signToken(current);
             return { token, current };
+        },
+        removeProvidedName: async (_, args, context) => {
+            if (context.user) {
+            const updatedUser = await User.findOneAndUpdate({_id: context.user._id},{ $pull: { provided_names: { name: args.name } } }, { new: true } );
+            return updatedUser;
+            }
+            throw new AuthenticationError('You need, should, and must be logged in!');
         }
     }
 }
