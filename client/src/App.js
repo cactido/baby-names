@@ -2,6 +2,8 @@ import Login from './pages/Login';
 import Entry from './pages/Entry';
 import Header from './components/Header';
 import Compare from './pages/Compare';
+import List from './pages/List';
+import Home from './pages/Home';
 import { Container, Row } from 'reactstrap';
 
 function App() {
@@ -9,8 +11,10 @@ function App() {
     <Container fluid>
       <Header></Header>
         {/* <Login></Login> */}
-        <Entry></Entry>
+        {/* <Entry></Entry> */}
         {/* <Compare></Compare> */}
+        {/* <List></List> */}
+        <Home></Home>
       <Row>
         {/* Footer goes here */}
       </Row>

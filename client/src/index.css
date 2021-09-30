@@ -39,3 +39,8 @@ code {
 .boy-name {
   background-color: lightblue;
 }
+
+.text {
+  font-weight: bold;
+  font-size: medium;
+}

@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay, Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
-// import AliceCarousel from 'react-alice-carousel';
-
-// import firstItem from "../assets/Carousel/Baby.jpg"
-// import secondItem from "../assets/Carousel/Nursery.jpg"
-// import thirdItem from "../assets/Carousel/Family.jpg"
-
 const Login = (props) => {
 
     const [loginFormState, setLoginFormState] = useState({ email: '', password: '', active: true });
