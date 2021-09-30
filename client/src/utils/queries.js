@@ -1,5 +1,14 @@
 import { gql } from '@apollo/client';
 
+const GET_ME = gql`
+    {
+        me {
+            _id
+            display_name
+        }
+    }
+`
+
 const GET_ALL_USERS = gql`
     query getAllUsers {
         getAllUsers {
@@ -45,4 +54,4 @@ const GET_AUTH = gql`
     }
 `
 
-export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH };
+export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH, GET_ME };

@@ -6,9 +6,9 @@ const { AuthenticationError } = require('apollo-server-errors');
 
 const resolvers = {
     Query: {
-        me: async (_, args, context) => {
+        me: async (parent, args, context) => {
             if (context.user) {
-                const current = await User.findOne({}).select('-__v -password')
+                const current = await User.findOne({ _id: context.user._id}).select('-__v -password')
                 return current;
             }
 
@@ -61,7 +61,7 @@ const resolvers = {
             return await User.findByIdAndUpdate(user_id, { $push: { selected_names: newName } }, { new: true })
         },
         getAuth: async (_, { email, password }) => {
-            const current = await User.findOne({ email: email }).exec();
+            const current = await User.findOne({ email }).exec();
             const validPassword = bcrypt.compare(password, current.password)
             if (!current || !validPassword) { throw new AuthenticationError('Invalid login credentials.') };
             const token = signToken(current);

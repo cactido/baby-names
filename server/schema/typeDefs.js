@@ -3,7 +3,7 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
     # schema types
     type User {
-        id: ID
+        _id: ID
         email: String
         password: String
         display_name: String
