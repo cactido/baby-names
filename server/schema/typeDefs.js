@@ -21,7 +21,7 @@ const typeDefs = gql`
         rating: Int!
     }
     type Auth {
-        token: String
+        token: ID!
         valid: Boolean!
     }
     # queries
