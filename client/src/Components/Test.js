@@ -6,9 +6,9 @@ const Test = () => {
     /*
     const[createUser, { data }] = useMutation(CREATE_USER, { variables:
         {
-            email: 'bcrypt2@gmail.com',
+            email: 'bcrypt3@gmail.com',
             password: 'testing123',
-            displayName: 'Bcrypt Test 2'
+            displayName: 'Bcrypt Test 3'
         }
     });
 

@@ -32,7 +32,7 @@ const GET_USER = gql`
 const CREATE_USER = gql`
     mutation ($email: String!, $password: String!, $displayName: String!) {
         createUser(email: $email, password: $password, display_name: $displayName) {
-            id
+            token
         }
     }
 `
