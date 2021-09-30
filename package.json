@@ -21,5 +21,6 @@
   "homepage": "https://github.com/cactido/baby-names#readme",
   "devDependencies": {
     "concurrently": "^6.2.2"
-  }
+  },
+  "dependencies": {}
 }

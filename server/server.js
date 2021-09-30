@@ -1,18 +1,25 @@
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
-const mongoose = require('mongoose');
+const path = require('path');
+// const mongoose = require('mongoose');
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./schema/resolvers');
 const cors = require('cors');
 const { authMiddleware } = require('./utils/auth');
 
+const db = require('./config/connection');
+
 const app = express();
-app.use(cors());
-require('dotenv').config();
+const PORT = process.env.PORT || 3001
+
+
+
+// app.use(cors());
+// require('dotenv').config();
 
 // database connection
-mongoose.connect(process.env.MONGODB_URI)
-mongoose.connection.once('open', () => { console.log('Database connected') });
+// mongoose.connect(process.env.MONGODB_URI)
+// mongoose.connection.once('open', () => { console.log('Database connected') });
 // middleware
 // apollo server
 async function startServer() {
@@ -22,4 +29,13 @@ async function startServer() {
 }
 startServer();
 
-app.listen(3001, () => { console.log('Listening on port 3001') });
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// app.get('*', (req, res) => {
+//     res.sendFile(path.json(__dirname, '../client/build/index.html'))
+// })
+
+db.once('open', () => {
+    app.listen(PORT, () => { console.log('Listening on port 3001') });
+})

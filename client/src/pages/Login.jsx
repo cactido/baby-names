@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useLazyQuery } from '@apollo/client';
-import { CREATE_USER, GET_AUTH } from '../queries';
+import { CREATE_USER, GET_AUTH } from '../utils/queries';
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay, Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
 const Login = (props) => {
@@ -28,22 +28,35 @@ const Login = (props) => {
 
     const handleLoginFormSubmit = async event => {
         event.preventDefault();
-        userAuth({variables:
-            {
-                email: loginFormState.email,
-                password: loginFormState.password
-            }
-        });
+
+        try {
+            const { data } = await userAuth({variables:
+                {
+                    email: loginFormState.email,
+                    password: loginFormState.password
+                }
+            });
+
+            console.log(data);
+        } catch (e) {
+            console.error(e);
+        }
+        
     };
     const handleSignUpFormSubmit = async event => {
         event.preventDefault();
-        createUser({variables:
-            {
-                email: signUpFormState.email,
-                password: signUpFormState.password,
-                displayName: signUpFormState.displayName
-            }
-        });
+
+        try {
+            createUser({variables:
+                {
+                    email: signUpFormState.email,
+                    password: signUpFormState.password,
+                    displayName: signUpFormState.displayName
+                }
+            });
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     const handleSwitch = (event) => {

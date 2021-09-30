@@ -1,3 +1,4 @@
+import React from 'react';
 import Login from './pages/Login';
 import Entry from './pages/Entry';
 import Header from './components/Header';
@@ -11,12 +12,37 @@ import Test from './components/Test';
 import { GET_USER } from './utils/queries.js';
 import { useQuery } from '@apollo/client';
 
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+  uri: '/graphql'
+});
+
+const authLink = setContext(({ headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      Authorization: token ? `Bearer ${token}`: ''
+    }
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+})
+
+
+
 function App() {
-  const { data: user1Data } = useQuery(GET_USER, { variables: { id: '6150c05b7afa685d78a9d919' } });
-  const { data: user2Data } = useQuery(GET_USER, { variables: { id: '6153b9c8d58bd6ec1fe2340b' } });
+  // const { data: user1Data } = useQuery(GET_USER, { variables: { id: '6150c05b7afa685d78a9d919' } });
+  // const { data: user2Data } = useQuery(GET_USER, { variables: { id: '6153b9c8d58bd6ec1fe2340b' } });
 
   return (
-    <Container fluid>
+    <ApolloProvider client={client}>
+      <Container fluid>
       <Header></Header>
         <Login></Login>
         {/* <Entry></Entry> */}
@@ -27,6 +53,8 @@ function App() {
         {/* Footer goes here */}
       </Row>
     </Container>
+    </ApolloProvider>
+    
   );
 }
 
