@@ -6,10 +6,13 @@ const { AuthenticationError } = require('apollo-server-errors');
 
 const resolvers = {
     Query: {
-        me: async (_, args) => {
-            const current = await User.findOne({})
-                .select('-__v -password')
-                .populate()
+        me: async (_, args, context) => {
+            if (context.user) {
+                const current = await User.findOne({}).select('-__v -password')
+                return current;
+            }
+
+            throw new AuthenticationError('Not logged in.');
         },
         getAllUsers: async () => { return await User.find(); },
         getUser: async (_, { id }) => {
@@ -49,12 +52,12 @@ const resolvers = {
             await user.save();
             return { token, user };
         },
-        deleteUser: async (_, {id}) => {
+        deleteUser: async (_, { id }) => {
             await User.findByIdAndDelete(id);
             return `Deleted user ${id}`;
         },
         updateDisplayName: async (_, { id, display_name }) => {
-            return await User.findByIdAndUpdate(id, {display_name: display_name}, { new: true });
+            return await User.findByIdAndUpdate(id, { display_name: display_name }, { new: true });
         },
         addProvidedName: async (_, { name, rating, user_id }) => {
             const newName = { name, rating, user_id };

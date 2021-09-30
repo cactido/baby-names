@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./schema/resolvers');
 const cors = require('cors');
+const { authMiddleware } = require('./utils/auth');
 
 const app = express();
 app.use(cors());
@@ -15,7 +16,7 @@ mongoose.connection.once('open', () => { console.log('Database connected') });
 // middleware
 // apollo server
 async function startServer() {
-    server = new ApolloServer({ typeDefs, resolvers });
+    const server = new ApolloServer({ typeDefs, resolvers, context: authMiddleware });
     await server.start();
     server.applyMiddleware({ app });
 }
