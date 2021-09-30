@@ -37,4 +37,12 @@ const CREATE_USER = gql`
     }
 `
 
-export { GET_ALL_USERS, GET_USER, CREATE_USER };
+const GET_AUTH = gql`
+    mutation getAuth($email: String!, $password: String!) {
+        getAuth(email: $email, password: $password) {
+            token
+        }
+    }
+`
+
+export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH };

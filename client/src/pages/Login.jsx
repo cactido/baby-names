@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useMutation } from '@apollo/client';
-import { CREATE_USER } from '../queries';
+import { useMutation, useLazyQuery } from '@apollo/client';
+import { CREATE_USER, GET_AUTH } from '../queries';
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay, Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
 // import AliceCarousel from 'react-alice-carousel';
@@ -13,6 +13,7 @@ const Login = (props) => {
     const [loginFormState, setLoginFormState] = useState({ email: '', password: '', active: true });
     const [signUpFormState, setSignUpFormState] = useState({ email: '', displayName: '', password: '', active: false });
     const [createUser, createUserState] = useMutation(CREATE_USER);
+    const [userAuth, userAuthState] = useMutation(GET_AUTH);
 
     const handleLoginChange = (event) => {
         const { name, value } = event.target
@@ -33,11 +34,13 @@ const Login = (props) => {
 
     const handleLoginFormSubmit = async event => {
         event.preventDefault();
-        console.log("submitted Sign Up form", loginFormState);
+        userAuth({variables:
+            {
+                email: loginFormState.email,
+                password: loginFormState.password
+            }
+        });
     };
-
-
-
     const handleSignUpFormSubmit = async event => {
         event.preventDefault();
         createUser({variables:
@@ -47,7 +50,6 @@ const Login = (props) => {
                 displayName: signUpFormState.displayName
             }
         });
-        console.log("submitted Sign Up form", signUpFormState);
     }
 
     const handleSwitch = (event) => {
