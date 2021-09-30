@@ -5,14 +5,19 @@ const GET_ME = gql`
         me {
             _id
             display_name
+            provided_names {
+                name
+                rating
+            }
         }
     }
 `
 
+
 const GET_ALL_USERS = gql`
     query getAllUsers {
         getAllUsers {
-            id
+            _id
             display_name
             provided_names {
                 name
@@ -54,4 +59,16 @@ const GET_AUTH = gql`
     }
 `
 
-export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH, GET_ME };
+const ADD_PROVIDED_NAME = gql`
+    mutation addProvidedName($name: String!, $rating: Int!, $user_id: ID!) {
+    addProvidedName(name: $name, rating: $rating, user_id: $user_id) {
+        provided_names {
+            name
+            rating
+            gender
+        }
+    }
+}
+`
+
+export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH, GET_ME, ADD_PROVIDED_NAME };

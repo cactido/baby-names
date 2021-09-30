@@ -53,8 +53,8 @@ const resolvers = {
             return await User.findByIdAndUpdate(id, { display_name: display_name }, { new: true });
         },
         addProvidedName: async (_, { name, rating, user_id }) => {
-            const newName = { name, rating, user_id };
-            return await User.findByIdAndUpdate(user_id, { $push: { provided_names: newName } }, { new: true });
+            // const newName = { name, rating, user_id };
+            return await User.findByIdAndUpdate(user_id, { $push: { provided_names: {name, rating, user_id} } }, { new: true });
         },
         addSelectedName: async (_, { name, rating, user_id }) => {
             const newName = { name, rating };
