@@ -60,8 +60,8 @@ const GET_AUTH = gql`
 `
 
 const ADD_PROVIDED_NAME = gql`
-    mutation addProvidedName($name: String!, $rating: Int!, $user_id: ID!) {
-    addProvidedName(name: $name, rating: $rating, user_id: $user_id) {
+    mutation addProvidedName($name: String!, $rating: Int!, $user_id: ID!, $gender: String!) {
+    addProvidedName(name: $name, rating: $rating, user_id: $user_id, gender: $gender) {
         provided_names {
             name
             rating

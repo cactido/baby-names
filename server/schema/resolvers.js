@@ -52,18 +52,18 @@ const resolvers = {
         updateDisplayName: async (_, { id, display_name }) => {
             return await User.findByIdAndUpdate(id, { display_name: display_name }, { new: true });
         },
-        addProvidedName: async (_, { name, rating, user_id }) => {
-            // const newName = { name, rating, user_id };
-            return await User.findByIdAndUpdate(user_id, { $push: { provided_names: {name, rating, user_id} } }, { new: true });
+        addProvidedName: async (_, { name, rating,  gender, user_id }) => {
+            const newName = { name, rating, gender, user_id };
+            return await User.findByIdAndUpdate(user_id, { $push: { provided_names: newName } }, { new: true });
         },
-        addSelectedName: async (_, { name, rating, user_id }) => {
-            const newName = { name, rating };
+        addSelectedName: async (_, { name, rating, gender, user_id }) => {
+            const newName = { name, rating, gender };
             return await User.findByIdAndUpdate(user_id, { $push: { selected_names: newName } }, { new: true })
         },
         getAuth: async (_, { email, password }) => {
             const current = await User.findOne({ email }).exec();
             const validPassword = bcrypt.compare(password, current.password)
-            if (!current || !validPassword) { throw new AuthenticationError('Invalid login credentials.') };
+            if (!current || !validPassword) { throw new AuthenticationError('Invalid login credentials.'); };
             const token = signToken(current);
             return { token, current };
         }

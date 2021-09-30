@@ -14,11 +14,13 @@ const typeDefs = gql`
     type ProvidedName {
         name: String!
         rating: Int!
+        gender: String!
         user_id: ID!
     }
     type SelectedName {
         name: String!
         rating: Int!
+        gender: String!
     }
     type Auth {
         token: ID!
@@ -46,9 +48,9 @@ const typeDefs = gql`
 
         updateDisplayName(id: ID!, display_name: String!): User
 
-        addProvidedName(name: String!, rating: Int!, user_id: ID!): User
+        addProvidedName(name: String!, rating: Int!, gender: String!, user_id: ID!): User
 
-        addSelectedName(name: String!, rating: Int!, user_id: ID!): User
+        addSelectedName(name: String!, rating: Int!, gender: String!, user_id: ID!): User
         
         getAuth(email: String!, password: String!): Auth
     }

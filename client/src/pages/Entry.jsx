@@ -27,6 +27,7 @@ const Entry = (props) => {
             ...formState,
             [name]: value
         });
+        console.log(formState.gender);
     }
     const handleFormSubmit = async event => {
         event.preventDefault();
@@ -39,9 +40,10 @@ const Entry = (props) => {
         console.log("name:", formState.names)
 
         try {
+            console.log(formState.gender.toLowerCase());
             const { data } = await addProvidedName(
                 {
-                    variables: {user_id: userData._id, name: formState.names, rating: rated }
+                    variables: {user_id: userData._id, name: formState.names, rating: rated, gender:formState.gender.toLowerCase() }
                 }
             )
         } catch (err) {
