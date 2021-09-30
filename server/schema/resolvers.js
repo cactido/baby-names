@@ -1,6 +1,8 @@
 const Name = require('../models/Name');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-errors');
 
 const resolvers = {
     Query: {
@@ -22,21 +24,25 @@ const resolvers = {
         },
         getAuth: async (_, { email, password }) => {
             const current = await User.findOne({ email: email }).exec();
-            const valid = bcrypt.compare(password, current.password)
-            return { token:'weeeeee', valid }
+            const validPassword = bcrypt.compare(password, current.password)
+            if (!current || !validPassword) { throw new AuthenticationError('Invalid login credentials.') };
+            const token = signToken(current);
+            return { token, current };
         }
     },
     Mutation: {
         createUser: async (_, args) => {
-            let hashedPassword = await bcrypt.hash(args.password, 10);
+            const hashedPassword = await bcrypt.hash(args.password, 10);
 
-            let user = new User({
+            const user = new User({
                 email: args.email,
                 password: hashedPassword,
                 display_name: args.display_name,
                 partner: args.partner
-            })
-            return await user.save();
+            });
+            const token = signToken(user);
+            await user.save();
+            return { token, user };
         },
         deleteUser: async (_, {id}) => {
             await User.findByIdAndDelete(id);

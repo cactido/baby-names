@@ -22,7 +22,7 @@ const typeDefs = gql`
     }
     type Auth {
         token: ID!
-        valid: Boolean!
+        user: User
     }
     # queries
     type Query {
@@ -40,7 +40,7 @@ const typeDefs = gql`
             password: String!
             display_name: String!
             partner: String    
-        ): User
+        ): Auth
         deleteUser(id: ID!): String
         updateDisplayName(id: ID!, display_name: String!): User
         addProvidedName(name: String!, rating: Int!, user_id: ID!): User
