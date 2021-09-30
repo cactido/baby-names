@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.main-card {
+  background: repeating-linear-gradient(
+    45deg,
+    lightpink,
+    lightpink 20px,
+    lightblue 20px,
+    lightblue 40px
+  );
+}
+
+.header {
+  background-color: darkblue;
+  color: lightpink;
+}
+
+.links {
+  text-decoration: none;
+  color: lightpink;
+}
+
+.girl-name {
+  background-color: lightpink;
+}
+
+.boy-name {
+  background-color: lightblue;
+
