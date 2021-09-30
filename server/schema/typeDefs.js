@@ -20,6 +20,10 @@ const typeDefs = gql`
         name: String!
         rating: Int!
     }
+    type Auth {
+        token: String
+        valid: Boolean!
+    }
     # queries
     type Query {
         getAllUsers: [User]
@@ -27,6 +31,7 @@ const typeDefs = gql`
         getProvidedNames(id: ID!): [ProvidedName]
         getSelectedNames(id: ID!): [SelectedName]
         getTotalResponses(id: ID!): Int
+        getAuth(email: String!, password: String!): Auth
     }
     # mutations
     type Mutation {

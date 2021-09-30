@@ -14,10 +14,9 @@ const GET_ALL_USERS = gql`
     }
 `;
 
-
 const GET_USER = gql`
-    query getUser($userId: ID!) {
-        getUser(id: $userId) {
+    query getUser($id: ID!) {
+        getUser(id: $id) {
             provided_names {
                 name
                 rating
@@ -30,4 +29,12 @@ const GET_USER = gql`
     }
 `;
 
-export { GET_ALL_USERS, GET_USER };
+const CREATE_USER = gql`
+    mutation ($email: String!, $password: String!, $displayName: String!) {
+        createUser(email: $email, password: $password, display_name: $displayName) {
+            id
+        }
+    }
+`
+
+export { GET_ALL_USERS, GET_USER, CREATE_USER };

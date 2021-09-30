@@ -1,5 +1,6 @@
 const Name = require('../models/Name');
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 const resolvers = {
     Query: {
@@ -18,13 +19,20 @@ const resolvers = {
         getTotalResponses: async (_, { id }) => {
             const current = await User.findById(id);
             return current.selected_names.length;
+        },
+        getAuth: async (_, { email, password }) => {
+            const current = await User.findOne({ email: email }).exec();
+            const valid = bcrypt.compare(password, current.password)
+            return { token:'weeeeee', valid }
         }
     },
     Mutation: {
         createUser: async (_, args) => {
+            let hashedPassword = await bcrypt.hash(args.password, 10);
+
             let user = new User({
                 email: args.email,
-                password: args.password,
+                password: hashedPassword,
                 display_name: args.display_name,
                 partner: args.partner
             })
