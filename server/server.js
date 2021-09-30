@@ -32,9 +32,9 @@ startServer();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.json(__dirname, '../client/build/index.html'))
-// })
+app.get('*', (req, res) => {
+    res.sendFile(path.json(__dirname, '../client/build/index.html'))
+})
 
 db.once('open', () => {
     app.listen(PORT, () => { console.log('Listening on port 3001') });

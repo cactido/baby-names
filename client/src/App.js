@@ -11,7 +11,7 @@ import Result from './components/Result';
 import Test from './components/Test';
 import { GET_USER } from './utils/queries.js';
 import { useQuery } from '@apollo/client';
-
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
@@ -19,12 +19,12 @@ const httpLink = createHttpLink({
   uri: '/graphql'
 });
 
-const authLink = setContext(({ headers }) => {
+const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
   return {
     headers: {
       ...headers,
-      Authorization: token ? `Bearer ${token}`: ''
+      authorization: token ? `Bearer ${token}`: ''
     }
   };
 });
@@ -42,17 +42,23 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
+
+      <Router>
+        <>
       <Container fluid>
       <Header></Header>
-        <Login></Login>
-        {/* <Entry></Entry> */}
-        {/* <Compare></Compare> */}
-        {/* <Home></Home> */}
+      <Switch>
+        <Route exact path='/' component={Login} />
+        <Route exact path='/Home' component={Home} />
+        <Route exact path='/Entry' component={Entry} />
+        <Route exact path='/List' component={List} />
+        <Route exact path='/Compare' component={Compare} />
+      </Switch>
+        
         {/* <Result user1Data={user1Data} user2Data={user2Data}></Result> */}
-      <Row>
-        {/* Footer goes here */}
-      </Row>
     </Container>
+      </>
+    </Router>
     </ApolloProvider>
     
   );
