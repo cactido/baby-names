@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation, useLazyQuery } from '@apollo/client';
 import { CREATE_USER, GET_AUTH } from '../utils/queries';
 import { Card, CardTitle, CardText, CardImg, CardImgOverlay, Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
@@ -9,6 +9,12 @@ const Login = (props) => {
     const [signUpFormState, setSignUpFormState] = useState({ email: '', displayName: '', password: '', active: false });
     const [createUser, createUserState] = useMutation(CREATE_USER);
     const [userAuth, userAuthState] = useMutation(GET_AUTH);
+
+    useEffect(() => {
+        if(Auth.loggedIn()) {
+            window.location.assign('/Home');
+        }
+      },[])
 
     const handleLoginChange = (event) => {
         const { name, value } = event.target
@@ -106,7 +112,6 @@ const Login = (props) => {
     }
 
     return (
-        
         <Row>
             <Col xs="12" className="m-0 p-0" style={{ height: "500px" }}>
                 <Card style={{ backgroundColor: 'black' }}>
