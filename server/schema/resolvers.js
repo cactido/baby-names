@@ -6,6 +6,11 @@ const { AuthenticationError } = require('apollo-server-errors');
 
 const resolvers = {
     Query: {
+        me: async (_, args) => {
+            const current = await User.findOne({})
+                .select('-__v -password')
+                .populate()
+        },
         getAllUsers: async () => { return await User.find(); },
         getUser: async (_, { id }) => {
             return await User.findById(id);

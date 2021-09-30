@@ -3,9 +3,9 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
     # schema types
     type User {
-        id: ID!
-        email: String!
-        password: String!
+        id: ID
+        email: String
+        password: String
         display_name: String
         partner: String
         provided_names: [ProvidedName]
@@ -26,6 +26,7 @@ const typeDefs = gql`
     }
     # queries
     type Query {
+        me: User
         getAllUsers: [User]
         getUser(id: ID!): User
         getProvidedNames(id: ID!): [ProvidedName]
