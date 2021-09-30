@@ -29,9 +29,6 @@ const Compare = () => {
                                     <Col>
                                        <h2>Alice</h2>
                                     </Col>
-                                    <Col>
-                                       <span className="text">for a Girl</span> 
-                                    </Col>
                                     <Row>
                                         <FormGroup>
                                             <Label for="rating" className="text">Rating:</Label>
