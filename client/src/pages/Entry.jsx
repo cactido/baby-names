@@ -31,6 +31,7 @@ const Entry = (props) => {
         });
         console.log(formState.gender);
     }
+    
     const handleFormSubmit = async event => {
         // event.preventDefault();
         // setNameListState(namearr => [...namearr, formState]);
