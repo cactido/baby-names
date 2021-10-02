@@ -73,6 +73,13 @@ const resolvers = {
             return updatedUser;
             }
             throw new AuthenticationError('You need, should, and must be logged in!');
+        },
+        addPartner: async (_, args, context) => {
+            if (context.user) {
+                const updatedUser = await User.findOneAndUpdate({_id: context.user._id,}, { partner: args.partner }, {new: true});
+                return updatedUser;
+            }
+            throw new AuthenticationError('You need, should, and must be logged in!');
         }
     }
 }

@@ -7,7 +7,7 @@ const typeDefs = gql`
         email: String
         password: String
         display_name: String
-        partner: String
+        partner: ID
         provided_names: [ProvidedName]
         selected_names: [SelectedName]
     }
@@ -55,6 +55,8 @@ const typeDefs = gql`
         getAuth(email: String!, password: String!): Auth
 
         removeProvidedName(name: String!): User
+
+        addPartner(partner: ID!): User
     }
 `;
 

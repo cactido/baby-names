@@ -5,6 +5,7 @@ const GET_ME = gql`
         me {
             _id
             display_name
+            partner
             provided_names {
                 name
                 rating
@@ -100,6 +101,16 @@ const ADD_SELECTED_NAME = gql`
         }
     }
 }
-`
+`;
 
-export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH, GET_ME, ADD_PROVIDED_NAME, REMOVE_PROVIDED_NAME, ADD_SELECTED_NAME };
+const ADD_PARTNER = gql`
+    mutation addPartner($partner: ID!) {
+        addPartner(partner: $partner) {
+            _id
+            display_name
+            partner
+        }
+    }
+`;
+
+export { GET_ALL_USERS, GET_USER, CREATE_USER, GET_AUTH, GET_ME, ADD_PROVIDED_NAME, REMOVE_PROVIDED_NAME, ADD_SELECTED_NAME, ADD_PARTNER };

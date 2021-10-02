@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useQuery, useMutation } from '@apollo/client';
 
-import { GET_USER, ADD_SELECTED_NAME, GET_ME } from '../utils/queries';
+import { GET_USER, ADD_SELECTED_NAME, ADD_PARTNER, GET_ME } from '../utils/queries';
 
 import { Col, Row, Button, Form, FormGroup, Label, Input, Card, CardHeader, CardBody, CardImg, CardImgOverlay } from 'reactstrap';
 
@@ -12,7 +12,7 @@ const Compare = () => {
 
     const user = Auth.getProfile();
 
-    
+    const me = useQuery(GET_ME);
 
     const [idState, setIdState] = useState({ id: '' });
     const [formState, setFormState] = useState({ partnerId: '' });
@@ -23,11 +23,8 @@ const Compare = () => {
     // const  { loading, data, refetch } = useQuery(GET_USER, {
     //     variables: { id: user.data._id }
     // }); 
-       
-    const meObject = useQuery(GET_ME);
-
     
-
+    const [addPartner, addPartnerState] = useMutation(ADD_PARTNER);
     const [addSelected, addSelectedState] = useMutation(ADD_SELECTED_NAME);
 
     const handleIDForm = (event) => {
@@ -36,9 +33,21 @@ const Compare = () => {
         // setFormState({ on: true });
         console.log(formState.partnerId);
 
-        setIdState({ id: formState.partnerId });
+        try {
+            const { data } = addPartner({
+                variables: { partner: formState.partnerId }
+            }) 
 
-        refetch();
+            setIdState({ id: formState.partnerId });
+            refetch();
+        } catch(err) {
+            console.error(err);
+        }
+
+
+        
+
+        
 
     }
 
@@ -62,6 +71,7 @@ const Compare = () => {
 
     const handleFinish = (event) => {
         window.location.assign('/List');
+        // console.log(me);
     }
 
     const handleChange = (event) => {
