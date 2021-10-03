@@ -38,6 +38,8 @@ const GET_ALL_USERS = gql`
 const GET_USER = gql`
     query getUser($id: ID!) {
         getUser(id: $id) {
+            display_name
+            partner
             provided_names {
                 name
                 gender
@@ -45,6 +47,7 @@ const GET_USER = gql`
             }
             selected_names {
                 name
+                gender
                 rating
             }
         }
