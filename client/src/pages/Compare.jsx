@@ -57,6 +57,8 @@ const Compare = () => {
             })
 
             console.log(selectData);
+
+            event.target.disabled = true;
         } catch(err){
             console.error(err);
         }
@@ -114,7 +116,7 @@ const Compare = () => {
                                                     <Row>
                                                         <FormGroup>
                                                             <Label for="rating" className="text">Rating:</Label>
-                                                            <Input type="select" name={`${name_item.name} ${name_item.gender}`} id="rating" onChange={handleRating}>
+                                                            <Input type="select" name={`${name_item.name} ${name_item.gender}`} id="rating" onChange={handleRating} disabled={false}>
                                                                 <option value='1'>1 Like</option>
                                                                 <option value='2'>2 Fancy</option>
                                                                 <option value='3'>3 Enjoy</option>
