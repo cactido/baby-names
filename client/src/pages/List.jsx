@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Result from '../Result.js';
+import Result from './Result.js';
 
 import { Row, Col, Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 
