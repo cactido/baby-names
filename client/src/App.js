@@ -7,8 +7,6 @@ import List from './pages/List';
 import Home from './pages/Home';
 import { Container, Row } from 'reactstrap';
 import './App.css';
-import Result from './components/Result';
-import Test from './components/Test';
 import { GET_USER } from './utils/queries.js';
 import { useQuery } from '@apollo/client';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
