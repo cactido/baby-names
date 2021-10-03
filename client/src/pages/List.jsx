@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Result from '../components/Result';
+
 import { Row, Col, Card, Button, CardHeader, CardFooter, CardBody, CardTitle, CardText, CardImg, CardImgOverlay } from 'reactstrap';
 
 const List = () => {
@@ -16,7 +18,7 @@ const List = () => {
                             <Card className="m-1">
                                 <CardHeader className="main-card fs-3">List Title</CardHeader>
                                 <CardBody>
-                                    List Contents
+                                    <Result></Result>
                                     {/* {nameListState.map(item => (
                             <Row key={item.names} className={`d-flex justify-content-evenly border border-dark p-2 m-1 ${item.gender === 'Girl' ? 'girl-name' : 'boy-name'}`}>
                                 <Col>

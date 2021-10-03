@@ -42,13 +42,7 @@ const Compare = () => {
             refetch();
         } catch(err) {
             console.error(err);
-        }
-
-
-        
-
-        
-
+        }  
     }
 
     const handleRating = (event) => {
